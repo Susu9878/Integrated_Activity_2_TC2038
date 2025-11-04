@@ -52,7 +52,14 @@ int main() {
     }
     inputFile.close();
 
-    for(int i = 0; i < N; ++i){
+    
+
+    
+}
+
+
+/*
+for(int i = 0; i < N; ++i){
         for (int j = 0; j < N; ++j) {
             cout << distance_matrix[i][j] << " ";
         }
@@ -69,6 +76,4 @@ int main() {
     for(int i = 0; i < N; ++i){
         cout << "(" << polygons[i][0] << ", " << polygons[i][1] << ")" << endl;
     }
-
-    return 0;
-}
+*/
