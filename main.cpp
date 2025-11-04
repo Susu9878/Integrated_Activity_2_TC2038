@@ -5,6 +5,11 @@
 #include <sstream>
 #include <algorithm>
 
+//headers
+#include "./headers/Maxflow.h"
+#include "./headers/Kruskal.h"
+#include "./headers/TSP.h"
+
 using namespace std;
 
 int main() {
@@ -52,11 +57,19 @@ int main() {
     }
     inputFile.close();
 
-    
+    // Output: 
+    // 1. Way of wiring the neighborhoods with fiber  (list of arcs of the form (A,B)) 
+    Kruskal(distance_matrix);
 
+    // 2. route to be followed by the mail delivery personnel, considering start and end in the same neighborhoods.
+    TSP(distance_matrix);
+
+    // 3. maximum information flow value from the initial node to the final node.
+    CalculateMaxFlow(flow_matrix);
     
+    // 4. list of polygons (each element is a list of points of the form (x,y)). 
+    //voronoi???
 }
-
 
 /*
 for(int i = 0; i < N; ++i){
