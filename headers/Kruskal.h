@@ -42,10 +42,10 @@ bool compare(vector<int> &a,vector<int> &b){
    return a[2] < b[2]; 
 }
 
-void Kruskal(int vertices, vector<vector<int>>& matrix){
+vector<vector<int>> Kruskal(int vertices, vector<vector<int>>& matrix){
     Disjoint d(vertices);
-    int cost = 0;
-    int count = 0;
+    
+    vector<vector<int>> mst;
 
     for (int i = 0; i < matrix.size(); i++) {
         int x = matrix[i][0];
@@ -54,11 +54,12 @@ void Kruskal(int vertices, vector<vector<int>>& matrix){
 
         if (d.find(x) != d.find(y)) {
             d.unite(x, y);
-            cost += w;
-            if (++count == vertices - 1) 
-                break;
+            mst.push_back({x, y, w});
+            if (mst.size() == vertices - 1) break;
         }
     }
+
+    return mst;
 }
 
 #endif

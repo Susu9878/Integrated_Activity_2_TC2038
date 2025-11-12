@@ -70,8 +70,11 @@ int main() {
     sort(edges.begin(), edges.end(), compare);
 
     // Output: 
-    // 1. Way of wiring the neighborhoods with fiber  (list of arcs of the form (A,B)) 
-    Kruskal(N, edges);
+    cout <<"1. Way of wiring the neighborhoods with fiber" << endl;  //(list of arcs of the form (A,B))
+    vector<vector<int>> mst = Kruskal(N, edges);
+    for(int i = 0; i<mst.size(); i++){
+        cout << "(" << mst[i][0] + 1 << ", " << mst[i][1] + 1 << ")" << endl;
+    }
 
     // 2. route to be followed by the mail delivery personnel, considering start and end in the same neighborhoods.
     TSP(distance_matrix);
