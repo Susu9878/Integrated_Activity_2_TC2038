@@ -57,9 +57,21 @@ int main() {
     }
     inputFile.close();
 
+    vector<vector<int>> edges;
+    for(int i = 0; i < N; i++) {
+        for(int j = i+1; j < N; j++) {
+            if(distance_matrix[i][j] != 0) {
+                edges.push_back({i, j, distance_matrix[i][j]});
+            }
+        }
+    }
+
+    // sorted edges from smallest to largest
+    sort(edges.begin(), edges.end(), compare);
+
     // Output: 
     // 1. Way of wiring the neighborhoods with fiber  (list of arcs of the form (A,B)) 
-    Kruskal(distance_matrix);
+    Kruskal(N, edges);
 
     // 2. route to be followed by the mail delivery personnel, considering start and end in the same neighborhoods.
     TSP(distance_matrix);
