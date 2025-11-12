@@ -76,8 +76,20 @@ int main() {
         cout << "(" << mst[i][0] + 1 << ", " << mst[i][1] + 1 << ")" << endl;
     }
 
-    // 2. route to be followed by the mail delivery personnel, considering start and end in the same neighborhoods.
-    TSP(distance_matrix);
+	// 2. route to be followed by the mail delivery personnel
+	cout << "2. Shortest route for mail delivery personnel:" << endl;
+	TSPResult result = TSP(distance_matrix);
+
+	cout << "   Route: ";
+	for (size_t i = 0; i < result.route.size(); ++i) {
+    	cout << result.route[i] + 1; // print 1-based index
+    	if (i != result.route.size() - 1) cout << " -> ";
+	}
+	cout << endl;
+	cout << "   Total cost: " << result.cost << endl;
+
+
+
 
     cout << "3. maximum information flow value from the initial node to the final node." << endl;
     cout << CalculateMaxFlow(flow_matrix, N) << endl;
