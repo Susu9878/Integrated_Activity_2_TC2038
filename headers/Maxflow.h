@@ -2,72 +2,56 @@
 #define MAXFLOW_H
 
 #include <vector>
-#include <iostream>
-#include <algorithm>
-#include <limits.h>
 #include <queue>
-#include <string.h>
-
+#include <climits>
+#include <cstring>
 using namespace std;
-bool bfs(vector<vector<int>> flow_matrix_r, int N,  int s, int t, int parent[])
-{
-    bool visited[N];
-    memset(visited, 0, sizeof(visited));
+
+bool bfs(vector<vector<int>>& residual, int s, int t, int parent[], int N) {
+    vector<bool> visited(N, false);
 
     queue<int> q;
     q.push(s);
     visited[s] = true;
     parent[s] = -1;
 
-    while (!q.empty()) {
+    while(!q.empty()) {
         int u = q.front();
         q.pop();
 
-        for (int n = 0; n < N; n++) {
-            if (visited[n] == false && flow_matrix_r[u][n] > 0) {
+        for(int v = 0; v < N; v++) {
+            if (!visited[v] && residual[u][v] > 0) {
+                parent[v] = u;
+                visited[v] = true;
+                q.push(v);
 
-                if (n == t) {
-                    parent[n] = u;
+                if (v == t)
                     return true;
-                }
-                q.push(n);
-                parent[n] = u;
-                visited[n] = true;
             }
         }
     }
+
     return false;
 }
 
-int CalculateMaxFlow(vector<vector<int>> flow_matrix, int N)
-{
-    // int s - start point
-    // int t - end point
-    int s,t,u,n;
-    vector<vector<int>> flow_matrix_r;
+int maxFlow(vector<vector<int>>& graph, int s, int t, int N) {
 
-    for (u = 0; u < N; u++)
-        for (n = 0; n < N; n++)
-            flow_matrix_r[u][n] = flow_matrix[u][n];
+    vector<vector<int>> residual = graph;
+    vector<int> parent(N);
+    int max_flow = 0;
 
-    int parent[N]; 
-
-    int max_flow = 0; 
-
-
-    while (bfs(flow_matrix_r, N ,s, t, parent)) {
-
+    while(bfs(residual, s, t, parent.data(), N)) {
         int path_flow = INT_MAX;
-        for (n = t; n != s; n = parent[n]) {
-            u = parent[n];
-            path_flow = min(path_flow, flow_matrix_r[u][n]);
+
+        for (int v = t; v != s; v = parent[v]) {
+            int u = parent[v];
+            path_flow = min(path_flow, residual[u][v]);
         }
 
-
-        for (n = t; n != s; n = parent[n]) {
-            u = parent[n];
-            flow_matrix_r[u][n] -= path_flow;
-            flow_matrix_r[n][u] += path_flow;
+        for (int v = t; v != s; v = parent[v]) {
+            int u = parent[v];
+            residual[u][v] -= path_flow;
+            residual[v][u] += path_flow;
         }
 
         max_flow += path_flow;
@@ -75,6 +59,5 @@ int CalculateMaxFlow(vector<vector<int>> flow_matrix, int N)
 
     return max_flow;
 }
-
 
 #endif

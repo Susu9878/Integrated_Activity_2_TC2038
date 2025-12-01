@@ -87,8 +87,10 @@ int main() {
 	cout << endl;
 	cout << "   Total cost: " << result.cost << endl;
 
-    cout << "3. maximum information flow value from the initial node to the final node." << endl;
-    cout << CalculateMaxFlow(flow_matrix,N) << endl;
+    cout << "3. Maximum information flow value from the initial node to the final node: ";
+    int s = 0;
+    int t = N-1;
+    cout << maxFlow(flow_matrix,s,t,N) << endl;
     
     // 4. list of polygons (each element is a list of points of the form (x,y)). 
     //voronoi???
